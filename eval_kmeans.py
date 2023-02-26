@@ -6,8 +6,8 @@ from torch.nn.functional import normalize
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('')
-    parser.add_argument('--feature_path', type=str)
-    parser.add_argument('--output_path', type=str)
+    parser.add_argument('feature_path', type=str)
+    parser.add_argument('output_path', type=str)
 
     args = parser.parse_args()
 
@@ -19,7 +19,7 @@ if __name__ == '__main__':
     
     data_norm = normalize(data, dim=1)
     
-    kmeans = KMeans(n_clusters=6)
+    kmeans = KMeans(n_clusters=48, random_state=77)
     kmeans.fit(data)
     pred = kmeans.predict(data)
     pred = pred.tolist()
@@ -28,7 +28,7 @@ if __name__ == '__main__':
     with open(args.output_path, 'w') as f :
         f.write('\n'.join(pred) + '\n')
 
-    kmeans = KMeans(n_clusters=6, random_state=77)
+    kmeans = KMeans(n_clusters=48, random_state=77)
     kmeans.fit(data_norm)
     pred = kmeans.predict(data_norm)
     pred = pred.tolist()

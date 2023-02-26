@@ -27,6 +27,9 @@ def load_features_and_labels(features_path, labels_path) :
         label_idxs = f.readlines()
         label_idxs = [int(line.split()[1]) for line in label_idxs]
     
+    #?  if type(features) == tensor
+    # features = features.numpy()
+    
     return features, label_idxs
 
 
@@ -71,6 +74,8 @@ def marking_cls_idx_one_sample_all_classes(plt, data, labels, n_classes) :
     #* marking one sample for all classes
     n_classes =  n_classes
     for i in range(n_classes):
+        if i == 30 :
+            continue
         idx = labels.index(i)
         x = data[idx, 0]
         y = data[idx, 1]
@@ -144,16 +149,18 @@ if __name__ == "__main__" :
     # !     --display_cls_list 28 35 39 50 62 67 78 90 --display_method detail_with_vid_idxs \
     # !     --detail_cls_list 39 --num_vids_per_cls 7 --output_dir /data/ahngeo11/svt/visualization/img/svt-k400-ucf101-noft 
     
-    # python tsne.py --features_path /data/ahngeo11/svt/outputs/kth/cut-one/testfeat.pkl \
-    #     --labels_path /data/ahngeo11/svt/datasets/annotations/kth_fe_videos.txt --display_method base \
-    #     --num_vids_per_cls 100 --dataset kth \
-    #     --output_path_with_name /data/ahngeo11/svt/visualization/img/svt-k400-kth-noft/cut-one-base.png 
+# python tsne.py --features_path /data/ahngeo11/svt/outputs/kth/cut-one/testfeat.pkl \
+#     --labels_path /data/ahngeo11/svt/datasets/annotations/kth_fe_videos.txt --display_method base \
+#     --num_vids_per_cls 100 --dataset kth \
+#     --output_path_with_name /data/ahngeo11/svt/visualization/img/svt-k400-kth-noft/cut-one-base.png 
     
     #? check dataset
     if args.dataset == "ucf101" :
         n_classes = 101
     elif args.dataset == "kth" :
         n_classes = 6
+    elif args.dataset == "diving48" :
+        n_classes = 48
     
     #? load features
     data, labels = load_features_and_labels(args.features_path, args.labels_path)   #* data[i] = feature tensor of i_th sample, labels[i] = label of i_th sample
@@ -201,7 +208,7 @@ if __name__ == "__main__" :
         marking_vid_idx_every_sample_display_list(plt, data_tsne, labels, display_cls_list)
     
     #? title
-    label_texts = get_label_texts(args.dataset)   #* label_text[0] = 'ApplyEyeMakeup'
+    # label_texts = get_label_texts(args.dataset)   #* label_text[0] = 'ApplyEyeMakeup'
 
     if args.display_method == "base" :  
         pass

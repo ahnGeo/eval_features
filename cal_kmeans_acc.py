@@ -250,7 +250,8 @@ def accuracy(output, target, topk=(1,)):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('')
-    parser.add_argument('--kmeans_results_path', type=str)
+    parser.add_argument('kmeans_results_path', type=str)
+    parser.add_argument('--label_path', type=str, default="/data/ahngeo11/svt/datasets/annotations/kth_fe_videos.txt")
 
     args = parser.parse_args()
 
@@ -258,7 +259,7 @@ if __name__ == '__main__':
         kmeans_results = f.readlines()
         
     labels = []
-    with open("/data/geo123/features/datasets/annotations/kth_fe_videos.txt", 'r') as f :
+    with open(args.label_path, 'r') as f :
         label_data = f.readlines()
         for line in label_data :
             labels.append(line.strip('\n').split()[-1])
